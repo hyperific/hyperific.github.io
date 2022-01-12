@@ -1,0 +1,345 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Albeck_createmovie</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-01-11"><meta name="DC.source" content="Albeck_createmovie.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Albeck_createmovie</h1><!--introduction--><p>Creates a timelapse movie from an nd2 file</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Inputs</a></li><li><a href="#2">Optional Inputs</a></li><li><a href="#3">Examples</a></li><li><a href="#4">Albeck_createmovie</a></li></ul></div><h2 id="1">Inputs</h2><div><ul><li><b>file</b> - The full path of the nd2 file <a href="p">p</a></li><li><b>ch</b> - The channel(s) you'd like to output</li><li><b>gate</b> - The gated intensity you want for the output (taken from LUT)</li><li><i>varargin</i> - Accepts optional inputs</li></ul></div><h2 id="2">Optional Inputs</h2><div><ul><li><b>bkg</b> - Description</li><li><b>outfolder</b> - Path for the output folder. Default: current working directory</li><li><b>fps</b> - Frame rate for the output video. Default: 20</li><li><b>resize</b> - Resizing factor by which frames will be scaled. Default: 0.25</li><li><b>vidprofile</b> - Video codec. Default: mpeg-4. See <a href="https://www.mathworks.com/help/matlab/ref/videowriter.html#d123e1548372">VideoWriter</a> for profile options.</li><li><b>dao</b> - Data Access Object. Default: None - retrieved from iman_imageaccess</li><li><b>t</b> - Total number of frames. Default: All - retrieved from dao</li><li><b>xy</b> - Well or list of wells of interest. Default: All wells - retrieved from dao</li><li><b>nw</b> - Number of parallel processing workers. Default: 10.</li></ul></div><h2 id="3">Examples</h2><p>Albeck_createmovie('C:\example.nd2',{3},{[0 570]},'nw',4) Runs the script with a file in the root directory of the C: drive, channel 3, gated 0-570 with 4 parallel processing workers.</p><h2 id="4">Albeck_createmovie</h2><pre class="codeinput"><span class="keyword">function</span> Albeck_createmovie(file,ch,gate,varargin)
+</pre><p>Optional inputs</p><pre class="codeinput">p.bkg = [];
+p.outfolder = pwd; <span class="comment">%'K:\imageData\Nont\Video'</span>
+p.fps = 20;
+p.resize = 0.25;
+p.vidprofile = <span class="string">'mpeg-4'</span>;
+p.dao = [];
+p.t = [];
+p.xy = [];
+p.nw = 10;
+</pre><p>Parse inputs</p><pre class="codeinput">nin = length(varargin);     <span class="comment">%Check for even number of add'l inputs</span>
+<span class="keyword">if</span> rem(nin,2) ~= 0; warning([<span class="string">'Additional inputs must be provided as '</span>,<span class="keyword">...</span>
+        <span class="string">'option, value pairs'</span>]);  <span class="keyword">end</span><span class="comment">%Splits pairs to a structure</span>
+<span class="keyword">for</span> s = 1:2:nin;   p.(lower(varargin{s})) = varargin{s+1};   <span class="keyword">end</span>
+<span class="comment">% prepare number of workers;</span>
+nW = p.nw;
+<span class="comment">% prepare outputs</span>
+[~,vidname] = fileparts(file);
+outfolder = fullfile(p.outfolder,vidname);
+<span class="keyword">if</span> ~exist(outfolder)
+    mkdir(outfolder)
+<span class="keyword">end</span>
+<span class="comment">% pre define all stages, channels asnd time</span>
+<span class="keyword">if</span> isempty(p.dao)
+    dao = iman_imageaccess(file);
+<span class="keyword">else</span>
+    dao = p.dao;
+<span class="keyword">end</span>
+<span class="keyword">if</span> isempty(p.xy)
+    xy = 1:dao.info.imax.xy;
+<span class="keyword">else</span>
+    xy = p.xy;
+<span class="keyword">end</span>
+<span class="keyword">if</span> isempty(p.t)
+    t = dao.info.imax.t;
+<span class="keyword">else</span>
+    t = p.t;
+<span class="keyword">end</span>
+nxy = length(xy);
+cmax = dao.info.imax.c;
+<span class="comment">% fsz = [dao.frmsz.y,dao.frmsz.x];</span>
+<span class="comment">% set default nkg</span>
+<span class="keyword">if</span> isempty(p.bkg)
+    p.bkg = repmat(100,cmax,1);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput error">Not enough input arguments.
+
+Error in Albeck_createmovie (line 49)
+[~,vidname] = fileparts(file);
+</pre><p>Calculate how many video to make</p><pre class="codeinput"><span class="comment">% % allvid = xy*length(ch);</span>
+<span class="comment">% set up paralell structre</span>
+delete(gcp(<span class="string">'nocreate'</span>));
+pl = parpool(<span class="string">'local'</span>,nW);
+nW = min(nxy,pl.NumWorkers);
+ipw = ceil(nxy/nW);
+nper = ipw*ones(1,nW);
+dif = nW*ipw - nxy - 1;
+nper(end-dif:end) = nper(end-dif:end) - 1;
+xym = mat2cell(xy,1,nper);
+<span class="comment">% % create location first</span>
+<span class="comment">% % cnt = 0; clc;</span>
+</pre><p>Video write loop</p><pre class="codeinput"><span class="keyword">for</span> ich = 1:length(ch)
+    <span class="keyword">parfor</span> inW = 1:nW
+        <span class="comment">% create parallel dao</span>
+        <span class="keyword">if</span> dao.info.ThreadSafe
+            daop = dao;
+        <span class="keyword">else</span>
+            daop = iman_imageaccess(file);
+        <span class="keyword">end</span>
+        <span class="keyword">for</span> s = 1:nper(inW)
+            ixy = xym{inW}(s);
+<span class="comment">%             ixy = sum( nper(1:inW - 1)) + s;</span>
+            <span class="comment">% initiate video</span>
+            cch = ch{ich}; cgate = gate{ich};
+            <span class="keyword">if</span> length(cch) == 1
+                cname = sprintf(<span class="string">'ch%03d'</span>,cch);
+            <span class="keyword">end</span>
+            <span class="keyword">if</span> length(cch) == 2
+                cname = sprintf(<span class="string">'ch%03d_%03d'</span>,cch(1),cch(2));
+            <span class="keyword">end</span>
+            cvidname = fullfile(outfolder,sprintf([vidname <span class="string">'_xy%03d_'</span> cname],ixy));
+            vid = VideoWriter(cvidname,p.vidprofile);
+            vid.FrameRate = p.fps;
+            <span class="comment">% open video</span>
+            open(vid);
+            <span class="keyword">for</span> it = 1:t
+                <span class="comment">% declare image</span>
+                <span class="comment">%im = zeros(fsz(1),fsz(2),length(cch));</span>
+                <span class="comment">% time stamp text</span>
+                ctext = sprintf(<span class="string">'tp%d'</span>,it);
+                <span class="comment">% load images</span>
+                <span class="keyword">for</span> icch = 1:length(cch)
+                    ccch = cch(icch);
+                    cim  = double(iman_getframe(daop,[it,ccch,ixy,1]));
+                    cim = cim - p.bkg(ccch);
+                    im(1:size(cim,1),1:size(cim,2),icch) = cim;
+                <span class="keyword">end</span>
+                <span class="keyword">if</span> size(im,3) == 2
+                    im(im &lt; 0) = 0;
+                    im = im(:,:,1)./im(:,:,2);
+                <span class="keyword">end</span>
+                <span class="comment">% gate for visualization</span>
+                im(im &gt; cgate(2)) = cgate(2);
+                im(im &lt; cgate(1)) = cgate(1);
+                <span class="comment">% normalize the image</span>
+                im = (im - cgate(1))/(cgate(2) - cgate(1));
+                <span class="comment">% convert to 8 bit image</span>
+                im = uint8(im*256); im = imresize(im,p.resize);
+                <span class="comment">% inset time stamp;</span>
+                im = insertText(im,[1,1],ctext);
+                <span class="comment">% write video</span>
+                writeVideo(vid,im)
+            <span class="keyword">end</span>
+            close(vid)
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">% close parpool</span>
+delete(pl)
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Albeck_createmovie
+% Creates a timelapse movie from an nd2 file
+%% Inputs
+% * *file* - The full path of the nd2 file <p>
+% * *ch* - The channel(s) you'd like to output
+% * *gate* - The gated intensity you want for the output (taken from LUT)
+% * _varargin_ - Accepts optional inputs
+%% Optional Inputs
+% * *bkg* - Description
+% * *outfolder* - Path for the output folder. Default: current working directory
+% * *fps* - Frame rate for the output video. Default: 20
+% * *resize* - Resizing factor by which frames will be scaled. Default:
+% 0.25
+% * *vidprofile* - Video codec. Default: mpeg-4. See
+% <https://www.mathworks.com/help/matlab/ref/videowriter.html#d123e1548372 VideoWriter>
+% for profile options.
+% * *dao* - Data Access Object. Default: None - retrieved from iman_imageaccess
+% * *t* - Total number of frames. Default: All - retrieved from dao
+% * *xy* - Well or list of wells of interest. Default: All wells -
+% retrieved from dao
+% * *nw* - Number of parallel processing workers. Default: 10.
+%% Examples
+% Albeck_createmovie('C:\example.nd2',{3},{[0 570]},'nw',4)
+% Runs the script with a file in the root directory of the C: drive,
+% channel 3, gated 0-570 with 4 parallel processing workers.
+%% Albeck_createmovie
+function Albeck_createmovie(file,ch,gate,varargin)
+%%
+% Optional inputs
+p.bkg = [];
+p.outfolder = pwd; %'K:\imageData\Nont\Video'
+p.fps = 20;
+p.resize = 0.25;
+p.vidprofile = 'mpeg-4';
+p.dao = [];
+p.t = [];
+p.xy = [];
+p.nw = 10;
+
+%%
+% Parse inputs
+nin = length(varargin);     %Check for even number of add'l inputs
+if rem(nin,2) ~= 0; warning(['Additional inputs must be provided as ',...
+        'option, value pairs']);  end%Splits pairs to a structure
+for s = 1:2:nin;   p.(lower(varargin{s})) = varargin{s+1};   end
+% prepare number of workers;
+nW = p.nw;
+% prepare outputs
+[~,vidname] = fileparts(file);
+outfolder = fullfile(p.outfolder,vidname);
+if ~exist(outfolder)
+    mkdir(outfolder)
+end
+% pre define all stages, channels asnd time
+if isempty(p.dao)
+    dao = iman_imageaccess(file);
+else
+    dao = p.dao;
+end
+if isempty(p.xy)
+    xy = 1:dao.info.imax.xy;
+else
+    xy = p.xy;
+end
+if isempty(p.t)
+    t = dao.info.imax.t;
+else
+    t = p.t;
+end
+nxy = length(xy);
+cmax = dao.info.imax.c;
+% fsz = [dao.frmsz.y,dao.frmsz.x];
+% set default nkg
+if isempty(p.bkg)
+    p.bkg = repmat(100,cmax,1);
+end
+
+%% 
+% Calculate how many video to make
+
+% % allvid = xy*length(ch);
+% set up paralell structre
+delete(gcp('nocreate'));
+pl = parpool('local',nW);
+nW = min(nxy,pl.NumWorkers);
+ipw = ceil(nxy/nW);
+nper = ipw*ones(1,nW);
+dif = nW*ipw - nxy - 1;
+nper(end-dif:end) = nper(end-dif:end) - 1;
+xym = mat2cell(xy,1,nper);
+% % create location first
+% % cnt = 0; clc;
+
+%%
+% Video write loop
+for ich = 1:length(ch)
+    parfor inW = 1:nW
+        % create parallel dao
+        if dao.info.ThreadSafe 
+            daop = dao; 
+        else
+            daop = iman_imageaccess(file); 
+        end
+        for s = 1:nper(inW)
+            ixy = xym{inW}(s);
+%             ixy = sum( nper(1:inW - 1)) + s;
+            % initiate video
+            cch = ch{ich}; cgate = gate{ich};
+            if length(cch) == 1
+                cname = sprintf('ch%03d',cch);
+            end
+            if length(cch) == 2
+                cname = sprintf('ch%03d_%03d',cch(1),cch(2));
+            end
+            cvidname = fullfile(outfolder,sprintf([vidname '_xy%03d_' cname],ixy));
+            vid = VideoWriter(cvidname,p.vidprofile);
+            vid.FrameRate = p.fps;
+            % open video
+            open(vid);
+            for it = 1:t
+                % declare image
+                %im = zeros(fsz(1),fsz(2),length(cch));
+                % time stamp text
+                ctext = sprintf('tp%d',it);
+                % load images
+                for icch = 1:length(cch)
+                    ccch = cch(icch);
+                    cim  = double(iman_getframe(daop,[it,ccch,ixy,1]));
+                    cim = cim - p.bkg(ccch);
+                    im(1:size(cim,1),1:size(cim,2),icch) = cim;
+                end
+                if size(im,3) == 2
+                    im(im < 0) = 0;
+                    im = im(:,:,1)./im(:,:,2);
+                end
+                % gate for visualization
+                im(im > cgate(2)) = cgate(2);
+                im(im < cgate(1)) = cgate(1);
+                % normalize the image
+                im = (im - cgate(1))/(cgate(2) - cgate(1));
+                % convert to 8 bit image
+                im = uint8(im*256); im = imresize(im,p.resize);
+                % inset time stamp;
+                im = insertText(im,[1,1],ctext);
+                % write video
+                writeVideo(vid,im)
+            end
+            close(vid)
+        end
+    end
+end
+% close parpool
+delete(pl)
+
+##### SOURCE END #####
+--></body></html>
